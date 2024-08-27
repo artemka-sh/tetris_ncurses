@@ -1,7 +1,7 @@
 #include "Main.hpp"
 
 Main* Main::sInstance = nullptr;
-Main::Main(): ground(Vector2(10, 10))
+Main::Main(): groundWin(10, 10, 4, 4), ground(Vector2(10, 10))
 {
     /////////////////     INIT     ////////////////////
     if(sInstance == nullptr) 
@@ -11,19 +11,9 @@ Main::Main(): ground(Vector2(10, 10))
     }
     else throw "double main";
 
-    initscr();
-    //getmaxyx(stdscr,screenSize.y ,screenSize.x);
-    	
-    // ground.setPosition(screenSize / 2);
-    // defaultBrickPosition = screenSize / 2;
-    // defaultBrickPosition.x -= ground.size.x / 2;
-    // defaultBrickPosition.y -= ground.size.y / 2 - 1;
-    ground.setPosition(Vector2(4, 4));
-    defaultBrickPosition = (Vector2(4, 4));
-    noecho();
-    curs_set(0);
-    srand(time(NULL));
-    refresh();
+    defaultBrickPosition = (Vector2(4, 0));
+
+    
     run();
 }
 
@@ -41,10 +31,12 @@ Main* Main::getIns()
 
 void Main::render()
 {
-    ground.draw();
+    ground.wdraw(groundWin);
     if(brick != nullptr)
-        brick->draw();
-    refresh();			       
+        brick->wdraw(groundWin);
+    refresh();
+    groundWin.refresh();
+			       
 }
 
 void Main::moveBrick(Sides side)    //здесь хорошо бы мьюиксом закрывать

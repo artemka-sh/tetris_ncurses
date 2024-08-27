@@ -1,10 +1,13 @@
 #ifndef __Bricks
 #define __Bricks
 
+//#pragma warning (disable : ) 
+
 #include <ncurses.h>
 #include <vector>
 #include "Utilits.hpp"
 #include "Ground.hpp"
+#include "Window.hpp"
 
 class Ground;
 class Brick
@@ -24,6 +27,7 @@ public:
     void HardRotate(bool clockwise);
     void cyclicShift();
     void draw();
+    void wdraw(Window &win);
 };
 
 

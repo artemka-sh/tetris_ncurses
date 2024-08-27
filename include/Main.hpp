@@ -14,6 +14,7 @@
 #include <ncurses.h>
 #include "Ground.hpp"
 #include "Bricks.hpp"
+#include "Window.hpp"
 
 
     
@@ -21,15 +22,18 @@ class Main
 {
 private:
     static Main* sInstance;
-    Vector2 screenSize;
+    Window groundWin;
+    Ground ground;
+
     Vector2 defaultBrickPosition;
     std::vector<Brick*> brickPack;
     Brick* brick = nullptr;
+    
     std::atomic<bool> isInputRunning = false;
     bool isRunning = true;
 
 public:
-    Ground ground;
+    
     Main();
     ~Main();
     static Main* getIns();

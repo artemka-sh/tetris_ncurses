@@ -183,3 +183,15 @@ void Brick::draw()
                 move(getcury(stdscr), getcurx(stdscr) + 1);      
     }
 }
+
+void Brick::wdraw(Window &win)
+{
+    for(int y = 0; y < maskSide; y++)
+    {
+        for(int x = 0; x < maskSide; x++)
+        {
+            if(mask[y * maskSide + x])  
+                win.print(skin, position.y + y, position.x + x);
+        }     
+    }
+}
