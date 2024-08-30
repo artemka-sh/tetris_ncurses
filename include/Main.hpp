@@ -31,6 +31,8 @@ private:
     
     std::atomic<bool> isInputRunning = false;
     bool isRunning = true;
+    std::mutex renderguard;
+    std::mutex breakguard;
 
 public:
     

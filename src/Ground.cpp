@@ -18,7 +18,7 @@ bool Ground::checkIntersection(const Brick* brick)
             if(
                 ((brick->position.y + i) == true and (brick->position.y + i) >= size.y)     // isOutOfBounds 
                     or
-                ((brick->position.x + j) >= (size.x + brick->maskSide) and brickvalue)        // isBeyondRight 
+                ((brick->position.x + j) >= (size.x) and brickvalue)        // isBeyondRight 
                     or
                 ((brick->position.x + j) < (0) and brickvalue)              // isBeyondLeft
                     or

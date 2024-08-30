@@ -1,7 +1,7 @@
 #include "Main.hpp"
 
 Main* Main::sInstance = nullptr;
-Main::Main(): groundWin(10, 10, 4, 4), ground(Vector2(10, 10))
+Main::Main(): groundWin(10, 10, 5, 7), ground(Vector2(10, 10))
 {
     /////////////////     INIT     ////////////////////
     if(sInstance == nullptr) 
@@ -31,12 +31,13 @@ Main* Main::getIns()
 
 void Main::render()
 {
+    renderguard.lock();
     ground.wdraw(groundWin);
     if(brick != nullptr)
         brick->wdraw(groundWin);
     refresh();
     groundWin.refresh();
-			       
+    renderguard.unlock();
 }
 
 void Main::moveBrick(Sides side)    //здесь хорошо бы мьюиксом закрывать
@@ -51,6 +52,7 @@ void Main::moveBrick(Sides side)    //здесь хорошо бы мьюикс�
 
 void Main::rotateBrick(bool clockwise)
 {
+    
     if(brick)
         brick->rotate(clockwise, ground);
     return; //тут не точно
@@ -63,6 +65,7 @@ void Main::userInput()
     while(brick != nullptr)
     {            
         char input = getch();
+        breakguard.lock();
         if(brick == nullptr)
             break;
 
@@ -85,6 +88,7 @@ void Main::userInput()
             delete brick;
             brick = nullptr;
         }
+        breakguard.unlock();
         //////////////////// RENDER ////////////////////
         render();
     }
@@ -97,7 +101,9 @@ void Main::gameTicks()
     while(brick != nullptr and isRunning)
     {
         std::this_thread::sleep_for(std::chrono::seconds(1));
+        breakguard.lock();
         moveBrick(Down);
+        breakguard.unlock();
         render();
     }
     return;
@@ -119,6 +125,10 @@ void Main::run()
             brickPack.push_back(new LBrick(defaultBrickPosition));
             brickPack.push_back(new IBrick(defaultBrickPosition));
             brickPack.push_back(new TBrick(defaultBrickPosition));
+            brickPack.push_back(new JBrick(defaultBrickPosition));
+            brickPack.push_back(new CBrick(defaultBrickPosition));
+            brickPack.push_back(new ZBrick(defaultBrickPosition));
+            brickPack.push_back(new SBrick(defaultBrickPosition));
             std::shuffle(brickPack.begin(), brickPack.end(), std::default_random_engine(seed));
         }
 
