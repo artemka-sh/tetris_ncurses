@@ -6,17 +6,33 @@
 
 class Window {
 private:
-    WINDOW *window; // Указатель на структуру окна
+    WINDOW *window; 
 
 public:
-    // Конструктор
     Window(int h, int w, int y, int x) {
         window = newwin(h, w, y, x);
     }
 
+    Window() {
+        window = newwin(0, 0, 0, 0);
+    }
+
     void draw() {
-        box(window, 0, 0); // Рисует границы окна
+        box(window, 0, 0);
         wrefresh(window); 
+    }
+
+     void setPosition(int y, int x) {
+        mvwin(window, y, x); 
+        refresh(); 
+     }
+
+    void setPositionCentered() {
+        int maxY, maxX;
+        getmaxyx(stdscr, maxY, maxX); 
+        int startY = (maxY - window->_maxy) / 2;
+        int startX = (maxX - window->_maxx) / 2;  
+        setPosition(startY, startX); 
     }
 
     void getPosition(int &y, int &x) const {
@@ -44,25 +60,6 @@ public:
         delwin(window); 
     }
 };
-
-// int main() {
-//     initscr(); // Инициализация ncurses
-//     cbreak();
-//     noecho(); // Отключаем отображение вводимых символов
-
-//     Window win(10, 40, 5, 5); // Создаем окно
-
-//     win.print("Press 'q' to exit", 1, 1); // Печатаем текст в окне
-
-//     char a = 0;
-//     while (a != 'q') {
-//         win.draw(); // Рисуем окно
-//         a = getchar(); // Ждем ввода
-//     }
-
-//     endwin(); // Завершаем работу с ncurses
-//     return 0;
-// }
 
 
 #endif //_Window

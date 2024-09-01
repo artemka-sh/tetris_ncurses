@@ -1,7 +1,7 @@
 #include "Main.hpp"
 
 Main* Main::sInstance = nullptr;
-Main::Main(): groundWin(10, 10, 5, 7), ground(Vector2(10, 10))
+Main::Main(): groundWin(10, 10, 0, 0), ground(Vector2(10, 10))
 {
     /////////////////     INIT     ////////////////////
     if(sInstance == nullptr) 
@@ -40,7 +40,7 @@ void Main::render()
     renderguard.unlock();
 }
 
-void Main::moveBrick(Sides side)    //здесь хорошо бы мьюиксом закрывать
+void Main::moveBrick(Sides side)    
 {
     if(brick)
         if(brick->moveTo(side, ground)) 
@@ -55,7 +55,7 @@ void Main::rotateBrick(bool clockwise)
     
     if(brick)
         brick->rotate(clockwise, ground);
-    return; //тут не точно
+    return;
     
 }
 
@@ -111,17 +111,15 @@ void Main::gameTicks()
 
 void Main::run()
 {
-    ///////////////////       START      ///////////////////
-
+    groundWin.setPositionCentered();
     render();
     getchar();    //   WELCOME SCREEN (must be)
 
     
-    while(isRunning)   // игра
+    while(isRunning)   
     {
         if(brickPack.empty())
         {
-            unsigned seed = rand();
             brickPack.push_back(new LBrick(defaultBrickPosition));
             brickPack.push_back(new IBrick(defaultBrickPosition));
             brickPack.push_back(new TBrick(defaultBrickPosition));
@@ -129,6 +127,7 @@ void Main::run()
             brickPack.push_back(new CBrick(defaultBrickPosition));
             brickPack.push_back(new ZBrick(defaultBrickPosition));
             brickPack.push_back(new SBrick(defaultBrickPosition));
+            unsigned seed = rand();
             std::shuffle(brickPack.begin(), brickPack.end(), std::default_random_engine(seed));
         }
 
