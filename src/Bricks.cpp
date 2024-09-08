@@ -123,27 +123,25 @@ void Brick::cyclicShift()
     // shift up 
     while 
     (
-        [&]() //(условие) в строчке что-то есть 
+        [&]() // (условие) в строчке что-то есть 
         {
-            
             for(int i = 0; i < maskSide; i++)
             {
-                if(mask[i])
+                if(mask[(maskSide - 1) * maskSide + i])
                     return false;
-            };
+            }
             return true;
         }()
     ) 
     {
-
-        
-        for (int i = 0; i < maskSide - 1; ++i){
-            for (int j = 0; j < maskSide; ++j){
-                mask[i * maskSide + j] = mask[(i + 1) * maskSide + j];
+        for (int i = maskSide - 1; i > 0; --i) { 
+            for (int j = 0; j < maskSide; ++j) {
+                mask[i * maskSide + j] = mask[(i - 1) * maskSide + j];
             }
         }
+
         for (int j = 0; j < maskSide; ++j) {
-            mask[(maskSide - 1) * maskSide + j] = 0; // fill 0 in last
+            mask[j] = 0; 
         }
     }
 

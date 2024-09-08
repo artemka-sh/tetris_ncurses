@@ -15,7 +15,7 @@ class Brick
 protected:
     Vector2 position;
     std::vector<bool> mask;
-    int maskSide = 4;
+    int maskSide = 0;
     char skin = 0;
 public:
     Brick(const Vector2 &_position);
@@ -24,10 +24,11 @@ public:
     bool moveTo(Sides side, Ground& ground);
     void HardMove(Sides side);
     bool rotate(bool clockwise, Ground& ground);
-    void HardRotate(bool clockwise);
+    virtual void HardRotate(bool clockwise);
     void cyclicShift();
     void draw();
     void wdraw(Window &win);
+    virtual ~Brick() {} 
 };
 
 
@@ -38,10 +39,10 @@ public:
     LBrick(const Vector2 &_position): Brick(_position) 
     {
         skin = '#';
-        mask = {1, 0, 0, 0,
-                1, 0, 0, 0,
-                1, 1, 0, 0,
-                0, 0, 0, 0};
+        maskSide = 3;
+        mask = {1, 0, 0,
+                1, 0, 0,
+                1, 1, 0};
         
     }
 };
@@ -53,11 +54,14 @@ public:
     IBrick(const Vector2 &_position): Brick(_position) 
     {
         skin = '@';
-        mask = {1, 0, 0, 0,
-                1, 0, 0, 0,
-                1, 0, 0, 0,
-                1, 0, 0, 0};
+        maskSide = 4;
+        mask = {0, 1, 0, 0,
+                0, 1, 0, 0,
+                0, 1, 0, 0,
+                0, 1, 0, 0};
     }
+    bool rotationState = 0;
+    void HardRotate(bool clockwise) override;
 };
 
 
@@ -67,10 +71,10 @@ public:
     TBrick(const Vector2 &_position): Brick(_position) 
     {
         skin = 'W';
-        mask = {0, 1, 0, 0,
-                1, 1, 1, 0,
-                0, 0, 0, 0,
-                0, 0, 0, 0};
+        maskSide = 3;
+        mask = {0, 1, 0,
+                1, 1, 1,
+                0, 0, 0};
     }
 };
 
@@ -80,10 +84,10 @@ public:
     JBrick(const Vector2 &_position): Brick(_position) 
     {
         skin = '#';
-        mask = {0, 1, 0, 0,
-                0, 1, 0, 0,
-                1, 1, 0, 0,
-                0, 0, 0, 0};
+        maskSide = 3;
+        mask = {0, 1, 0,
+                0, 1, 0,
+                1, 1, 0};
         
     }
 };
@@ -94,12 +98,12 @@ public:
     CBrick(const Vector2 &_position): Brick(_position) 
     {
         skin = 'M';
-        mask = {1, 1, 0, 0,
-                1, 1, 0, 0,
-                0, 0, 0, 0,
-                0, 0, 0, 0};
+        maskSide = 2;
+        mask = {1, 1, 
+                1, 1};
         
     }
+    void HardRotate(bool clockwise) override;
 };
 
 class ZBrick: public Brick
@@ -108,10 +112,10 @@ public:
     ZBrick(const Vector2 &_position): Brick(_position) 
     {
         skin = 'Z';
-        mask = {1, 1, 0, 0,
-                0, 1, 1, 0,
-                0, 0, 0, 0,
-                0, 0, 0, 0};
+        maskSide = 3;
+        mask = {1, 1, 0,
+                0, 1, 1,
+                0, 0, 0};
         
     }
 };
@@ -122,10 +126,10 @@ public:
     SBrick(const Vector2 &_position): Brick(_position) 
     {
         skin = 'Z';
-        mask = {0, 1, 1, 0,
-                1, 1, 0, 0,
-                0, 0, 0, 0,
-                0, 0, 0, 0};
+        maskSide = 3;
+        mask = {0, 1, 1,
+                1, 1, 0,
+                0, 0, 0};
         
     }
 };
