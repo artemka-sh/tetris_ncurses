@@ -13,3 +13,6 @@ int main()
     Main game;
     return 0;
 }
+
+// double mutex stop or something, when new brick does't happen 
+// убрать renderguard и расширить breakguard

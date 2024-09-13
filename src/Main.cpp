@@ -1,7 +1,7 @@
 #include "Main.hpp"
 
 Main* Main::sInstance = nullptr;
-Main::Main(): groundWin(10, 10, 0, 0), ground(Vector2(10, 10))
+Main::Main(): groundWin(18, 10, 0, 0), ground(Vector2(10, 18)), stateWin(18, 10, 0, 0)
 {
     /////////////////     INIT     ////////////////////
     if(sInstance == nullptr) 
@@ -12,7 +12,8 @@ Main::Main(): groundWin(10, 10, 0, 0), ground(Vector2(10, 10))
     else throw "double main";
 
     defaultBrickPosition = (Vector2(4, 0));
-
+    //stateWin.setPositionCentered();
+    
     
     run();
 }
@@ -29,6 +30,14 @@ Main* Main::getIns()
     return sInstance;
 }
 
+void Main::printState()
+{
+    stateWin.draw();
+    stateWin.print("Lines:", 2, 2);
+    stateWin.print( std::to_string(ground.getLines()), 4, 2);
+    stateWin.refresh();
+}
+
 void Main::render()
 {
     renderguard.lock();
@@ -37,6 +46,7 @@ void Main::render()
         brick->wdraw(groundWin);
     refresh();
     groundWin.refresh();
+    printState();
     renderguard.unlock();
 }
 
@@ -105,6 +115,7 @@ void Main::gameTicks()
         moveBrick(Down);
         breakguard.unlock();
         render();
+        
     }
     return;
 };
@@ -112,6 +123,11 @@ void Main::gameTicks()
 void Main::run()
 {
     groundWin.setPositionCentered();
+    groundWin.setPosition(groundWin.getXYPositions().y, groundWin.getXYPositions().x - 5);
+    stateWin.setPositionCentered();
+    stateWin.setPosition(stateWin.getXYPositions().y, stateWin.getXYPositions().x + 5);
+    
+
     render();
     getchar();    //   WELCOME SCREEN (must be)
 

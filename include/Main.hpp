@@ -24,6 +24,8 @@ private:
     static Main* sInstance;
     Window groundWin;
     Ground ground;
+    Window stateWin;
+    
 
     Vector2 defaultBrickPosition;
     std::vector<Brick*> brickPack;
@@ -41,6 +43,7 @@ public:
     static Main* getIns();
     void moveBrick(Sides side);
     void rotateBrick(bool clockwise);
+    void printState();
     void render();
     void userInput();
     void gameTicks();

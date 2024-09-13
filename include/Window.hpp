@@ -3,6 +3,7 @@
 
 #include <ncurses.h>
 #include <string>
+#include <Utilits.hpp>
 
 class Window {
 private:
@@ -37,6 +38,12 @@ public:
 
     void getPosition(int &y, int &x) const {
         getbegyx(window, y, x); 
+    }
+
+    Vector2 getXYPositions() const {
+        int x, y;
+        getbegyx(window, y, x); 
+        return Vector2(x, y);
     }
 
     void getSize(int &h, int &w) const {
