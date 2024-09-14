@@ -1,19 +1,8 @@
 #include "Main.hpp"
 
-Main* Main::sInstance = nullptr;
 Main::Main(): groundWin(18, 10, 0, 0), ground(Vector2(10, 18)), stateWin(18, 10, 0, 0)
 {
-    /////////////////     INIT     ////////////////////
-    if(sInstance == nullptr) 
-    {
-        sInstance = this;
-        
-    }
-    else throw "double main";
-
-    defaultBrickPosition = (Vector2(4, 0));
-    //stateWin.setPositionCentered();
-    
+    defaultBrickPosition = (Vector2(4, 0));    
     
     run();
 }
@@ -22,12 +11,6 @@ Main::~Main()
 {
     endwin();
     exit(0); 
-}
-
-
-Main* Main::getIns()
-{
-    return sInstance;
 }
 
 void Main::printState()
@@ -40,14 +23,12 @@ void Main::printState()
 
 void Main::render()
 {
-    renderguard.lock();
     ground.wdraw(groundWin);
     if(brick != nullptr)
         brick->wdraw(groundWin);
     refresh();
     groundWin.refresh();
     printState();
-    renderguard.unlock();
 }
 
 void Main::moveBrick(Sides side)    
@@ -98,9 +79,8 @@ void Main::userInput()
             delete brick;
             brick = nullptr;
         }
-        breakguard.unlock();
-        //////////////////// RENDER ////////////////////
         render();
+        breakguard.unlock();
     }
     isInputRunning = false;
     return;
@@ -113,9 +93,8 @@ void Main::gameTicks()
         std::this_thread::sleep_for(std::chrono::seconds(1));
         breakguard.lock();
         moveBrick(Down);
-        breakguard.unlock();
         render();
-        
+        breakguard.unlock();
     }
     return;
 };

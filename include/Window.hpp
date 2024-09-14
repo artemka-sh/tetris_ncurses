@@ -6,10 +6,9 @@
 #include <Utilits.hpp>
 
 class Window {
-private:
+public:
     WINDOW *window; 
 
-public:
     Window(int h, int w, int y, int x) {
         window = newwin(h, w, y, x);
     }

@@ -21,7 +21,6 @@
 class Main
 {
 private:
-    static Main* sInstance;
     Window groundWin;
     Ground ground;
     Window stateWin;
@@ -33,14 +32,12 @@ private:
     
     std::atomic<bool> isInputRunning = false;
     bool isRunning = true;
-    std::mutex renderguard;
     std::mutex breakguard;
 
 public:
     
     Main();
     ~Main();
-    static Main* getIns();
     void moveBrick(Sides side);
     void rotateBrick(bool clockwise);
     void printState();
