@@ -84,16 +84,17 @@ bool Brick::rotate(bool clockwise, Ground& ground)
 
 void Brick::HardRotate(bool clockwise) 
 {
-    for (int layer = 0; layer < maskSide / 2; ++layer) 
+    if(clockwise)
     {
-        int first = layer;
-        int last = maskSide - 1 - layer;
-        for (int i = first; i < last; ++i) 
+        for (int layer = 0; layer < maskSide / 2; ++layer) 
         {
-            int offset = i - first;
-            int top = mask[first * maskSide + i];
+            int first = layer;
+            int last = maskSide - 1 - layer;
+            for (int i = first; i < last; ++i) 
+            {
+                int offset = i - first;
+                int top = mask[first * maskSide + i];
 
-            if (clockwise) {
                 // left -> top
                 mask[first * maskSide + i] = mask[(last - offset) * maskSide + first];
                 // bottom -> left
@@ -102,9 +103,23 @@ void Brick::HardRotate(bool clockwise)
                 mask[last * maskSide + (last - offset)] = mask[i * maskSide + last];
                 // top -> right
                 mask[i * maskSide + last] = top;
-            } 
-            else 
+
+            }
+        }
+
+
+    }
+    else
+    {
+        for (int layer = 0; layer < maskSide / 2; ++layer) 
+        {
+            int first = layer;
+            int last = maskSide - 1 - layer;
+            for (int i = first; i < last; ++i) 
             {
+                int offset = i - first;
+                int top = mask[first * maskSide + i];
+
                 // также но наоборот 
                 mask[first * maskSide + i] = mask[i * maskSide + last];
                 mask[i * maskSide + last] = mask[last * maskSide + (last - offset)];
@@ -112,8 +127,9 @@ void Brick::HardRotate(bool clockwise)
                 mask[(last - offset) * maskSide + first] = top;
             }
         }
-    }
 
+    }
+    
     cyclicShift();
 }
 

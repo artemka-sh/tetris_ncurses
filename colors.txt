@@ -1,0 +1,55 @@
+    start_color();
+    init_pair(Black, COLOR_WHITE, COLOR_BLACK);
+    init_pair(Red, COLOR_RED, COLOR_BLACK);
+    init_pair(Blue, COLOR_GREEN, COLOR_MAGENTA);
+
+
+    enum Color{
+    No = -1,
+    Black = 0,
+    Red,
+    Orange,
+    Yellow,
+    Green,
+    Blue,
+    Magenta,
+    Grey
+
+};
+
+
+
+void wsetcolor(Color color)
+    {
+        if(color != currentColor)
+        {
+            wstandend(window);
+            switch(color)
+            {
+                case No:
+                    wattroff(window, COLOR_PAIR(Red));
+                    wattroff(window, COLOR_PAIR(Blue));
+                    wattron(window, COLOR_PAIR(Black));
+                    break;
+                case Black:
+                    wattron(window, COLOR_PAIR(Black));
+                case Red:
+                    wattron(window, COLOR_PAIR(Red)); // Включаем цветовую пару
+                    break;
+                case Orange:
+                case Yellow:
+                case Green:
+                case Blue:
+                    wattron(window, COLOR_PAIR(Blue));
+                    break;
+                case Magenta:
+                case Grey:
+                    break;
+  
+
+            }
+        }
+    }
+
+
+        if(color != currentColor) wsetcolor(color);

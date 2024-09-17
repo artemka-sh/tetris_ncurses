@@ -24,15 +24,17 @@ private:
     Window groundWin;
     Ground ground;
     Window stateWin;
+    Window helpWin;
     
-
     Vector2 defaultBrickPosition;
     std::vector<Brick*> brickPack;
     Brick* brick = nullptr;
     
     std::atomic<bool> isInputRunning = false;
     bool isRunning = true;
+    bool gameOverStop = false;
     std::mutex breakguard;
+    int level = 1;
 
 public:
     
@@ -41,9 +43,11 @@ public:
     void moveBrick(Sides side);
     void rotateBrick(bool clockwise);
     void printState();
+    void printHelp();
     void render();
     void userInput();
-    void gameTicks();
+    bool gameTicks(); // return game over state;
+    void gameOver();
     void run();
 };
 

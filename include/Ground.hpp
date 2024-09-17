@@ -23,7 +23,7 @@ public:
     void freeze(Brick *brick);
     ushort clean();
     void wdraw(Window &win);
-
+    bool checkGameOver();
 };
 
 #endif

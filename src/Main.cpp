@@ -1,6 +1,6 @@
 #include "Main.hpp"
 
-Main::Main(): groundWin(18, 10, 0, 0), ground(Vector2(10, 18)), stateWin(18, 10, 0, 0)
+Main::Main(): groundWin(18, 10, 0, 0), ground(Vector2(10, 18)), stateWin(11, 10, 0, 0), helpWin(7, 10, 0, 0)
 {
     defaultBrickPosition = (Vector2(4, 0));    
     
@@ -18,7 +18,22 @@ void Main::printState()
     stateWin.draw();
     stateWin.print("Lines:", 2, 2);
     stateWin.print( std::to_string(ground.getLines()), 4, 2);
+    stateWin.print("Level:", 6, 2);
+    stateWin.print(std::to_string(level), 8, 2);
     stateWin.refresh();
+}
+
+void Main::printHelp()
+{
+    helpWin.draw();
+    helpWin.print("a - left", 1, 1);
+    helpWin.print("s - down", 2, 1);
+    helpWin.print("d -right", 3, 1);
+    helpWin.print("q,e-rot.", 4, 1);
+    helpWin.print("o - exit", 5, 1);
+
+    helpWin.refresh();
+    
 }
 
 void Main::render()
@@ -29,6 +44,7 @@ void Main::render()
     refresh();
     groundWin.refresh();
     printState();
+    printHelp();
 }
 
 void Main::moveBrick(Sides side)    
@@ -43,11 +59,9 @@ void Main::moveBrick(Sides side)
 
 void Main::rotateBrick(bool clockwise)
 {
-    
     if(brick)
         brick->rotate(clockwise, ground);
     return;
-    
 }
 
 void Main::userInput()
@@ -86,25 +100,37 @@ void Main::userInput()
     return;
 };
 
-void Main::gameTicks()
+bool Main::gameTicks()
 {
     while(brick != nullptr and isRunning)
     {
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000/level));
         breakguard.lock();
         moveBrick(Down);
         render();
         breakguard.unlock();
     }
-    return;
+
+    if(ground.checkGameOver())
+    {
+        return true;
+    }
+    {
+        return false;
+    }
 };
+
+void Main::gameOver()
+{
+    //LOG("Game Over");
+}
 
 void Main::run()
 {
     groundWin.setPositionCentered();
-    groundWin.setPosition(groundWin.getXYPositions().y, groundWin.getXYPositions().x - 5);
-    stateWin.setPositionCentered();
-    stateWin.setPosition(stateWin.getXYPositions().y, stateWin.getXYPositions().x + 5);
+    groundWin.setPosition(groundWin.getXYPositions().y, groundWin.getXYPositions().x - 6);
+    stateWin.setPosition(groundWin.getXYPositions().y, groundWin.getXYPositions().x + 11);
+    helpWin.setPosition(stateWin.getXYPositions().y + 11, stateWin.getXYPositions().x);
     
 
     render();
@@ -129,7 +155,7 @@ void Main::run()
         brick = *brickPack.begin(); // current 
 
         auto myfuture = std::async(&Main::gameTicks, this);
-        (void)myfuture;
+        //(void)myfuture;
 
         if(!isInputRunning){
             isInputRunning = true;
@@ -137,8 +163,14 @@ void Main::run()
             inputThread.detach();
         }
 
-        myfuture.wait();
+        //myfuture.wait();
+        gameOverStop = myfuture.get();
         brickPack.erase(brickPack.begin());
     }
     
+    if(gameOverStop)
+    {
+        gameOver();
+    }
+
 }
