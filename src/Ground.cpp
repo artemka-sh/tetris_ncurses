@@ -91,7 +91,10 @@ bool Ground::checkGameOver()
 {
     for(int i = 0; i < size.x; i++)
     {
-        if(massive[i] != '.') return 1;
+        if(massive[i] != '.')
+        {
+            return 1;
+        } 
     }
     return 0;
 }

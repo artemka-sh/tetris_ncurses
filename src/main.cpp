@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 
+bool exitst = false;
+
 int main()
 {
     initscr();
@@ -10,8 +12,11 @@ int main()
     noecho();
     curs_set(0);
     srand(time(NULL));
-
-    Main game;
+    while(!exitst)
+    {
+        Main game;
+    }
+        
     return 0;
     
 }

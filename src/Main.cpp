@@ -1,16 +1,16 @@
 #include "Main.hpp"
 
+extern bool exitst;
+
 Main::Main(): groundWin(18, 10, 0, 0), ground(Vector2(10, 18)), stateWin(11, 10, 0, 0), helpWin(7, 10, 0, 0)
 {
     defaultBrickPosition = (Vector2(4, 0));    
-    
     run();
 }
 
 Main::~Main()
 {
     endwin();
-    exit(0); 
 }
 
 void Main::printState()
@@ -77,6 +77,7 @@ void Main::userInput()
         if(input == 'o')
         {
             isRunning = false;
+            exitst = true;
         }
         if(input == 'q')
             rotateBrick(/*clockwise*/ false);
@@ -93,6 +94,26 @@ void Main::userInput()
             delete brick;
             brick = nullptr;
         }
+        if(input == '1')
+            level = 1;
+        if(input == '2')
+            level = 2;
+        if(input == '3')
+            level = 3;
+        if(input == '4')
+            level = 4;
+        if(input == '5')
+            level = 5;
+        if(input == '6')
+            level = 6;
+        if(input == '7')
+            level = 7;
+        if(input == '8')
+            level = 8;
+        if(input == '9')
+            level = 10;
+        if(input == '0')
+            level = 20;
         render();
         breakguard.unlock();
     }
@@ -122,7 +143,8 @@ bool Main::gameTicks()
 
 void Main::gameOver()
 {
-    //LOG("Game Over");
+    groundWin.print("Game Over", 8, 1);
+    render();
 }
 
 void Main::run()
@@ -137,7 +159,7 @@ void Main::run()
     getchar();    //   WELCOME SCREEN (must be)
 
     
-    while(isRunning)   
+    while(isRunning && !gameOverStop)   
     {
         if(brickPack.empty())
         {
@@ -168,7 +190,7 @@ void Main::run()
         brickPack.erase(brickPack.begin());
     }
     
-    if(gameOverStop)
+    if(!gameOverStop)
     {
         gameOver();
     }
