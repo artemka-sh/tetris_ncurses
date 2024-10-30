@@ -15,4 +15,4 @@ add_executable(tetris ${SOURCES})
 
 
 find_package(Threads REQUIRED)
-target_link_libraries(tetris ncurses ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(tetris ncurses menu ${CMAKE_THREAD_LIBS_INIT})

@@ -1,11 +1,9 @@
 #include "Main.hpp"
 
-extern bool exitst;
 
 Main::Main(): groundWin(18, 10, 0, 0), ground(Vector2(10, 18)), stateWin(11, 10, 0, 0), helpWin(7, 10, 0, 0)
 {
     defaultBrickPosition = (Vector2(4, 0));    
-    run();
 }
 
 Main::~Main()
@@ -77,7 +75,6 @@ void Main::userInput()
         if(input == 'o')
         {
             isRunning = false;
-            exitst = true;
         }
         if(input == 'q')
             rotateBrick(/*clockwise*/ false);
@@ -114,8 +111,14 @@ void Main::userInput()
             level = 10;
         if(input == '0')
             level = 20;
-        render();
+        
         breakguard.unlock();
+        if(!isRunning)
+        {
+            return;
+        }
+        render();
+        
     }
     isInputRunning = false;
     return;

@@ -62,6 +62,19 @@ public:
         wrefresh(window); 
     }
 
+    void clear()
+    {
+        wclear(window);
+    }
+
+    void resetAttribute() {
+        wattroff(window, A_REVERSE); // Сбрасываем атрибут
+    }
+
+    void setAttributes(int attrs, short color_pair) {
+        wattr_set(window, attrs, color_pair, NULL); // Устанавливаем атрибуты и цвет
+    }
+
     ~Window() {
         delwin(window); 
     }
