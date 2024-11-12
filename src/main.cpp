@@ -4,31 +4,23 @@
 #include <vector>
 #include <string>
 #include <thread>
-bool exitst = false;
+
 
 using namespace std::chrono_literals;
 
 int main()
-{
-    
-    
+{  
     srand(time(NULL));
-    while(!exitst)
-    {
-        initscr();
-        cbreak();
-        noecho();
-        curs_set(0);
-        // Main game;
-        // game.run();
 
-        Menu menu;
-        menu.run();
+    initscr();
+    cbreak();
+    noecho();
+    curs_set(0);
 
-        endwin();
-        std::this_thread::sleep_for(2000ms);
-    }
-        
+    Menu menu;
+    menu.run();
+
+    endwin();
     return 0;
     
 }

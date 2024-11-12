@@ -1,6 +1,6 @@
-#include "Menu.hpp"
+#include "Settings.hpp"
 
-Menu::Menu(): menuWin( 10, 40, 4, 4)
+Settings::Settings(): menuWin( 10, 40, 4, 4)
 {
    choices = {          "Play!",
                         "Settings",
@@ -32,7 +32,7 @@ Menu::Menu(): menuWin( 10, 40, 4, 4)
 
 
 
-void Menu::render() {
+void Settings::render() {
     post_menu(menu);
     menuWin.draw();
     menuWin.refresh();
@@ -40,7 +40,7 @@ void Menu::render() {
 }
 
 
-void Menu::run() 
+void Settings::run() 
 {
     render();
     char input;
@@ -53,22 +53,9 @@ void Menu::run()
             menu_driver(menu, REQ_UP_ITEM);
         if(input == ' ')
         {
-            ITEM *current = current_item(menu);
-            std::string item_name_str(item_name(current)); // Преобразуем в std::string 
-            if(item_name_str == "Play!")
-            {
-                clear();
-                Main game;
-                game.run();
-            }
-            if(item_name_str == "Settings")
-            {
-                
-            }
-            if(item_name_str == "Exit")
-            {
-                break;
-            }
+            clear();
+            Main game;
+            game.run();
         }
             
         render();
