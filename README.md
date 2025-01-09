@@ -21,4 +21,4 @@ cmake --build .
 ./tetris
 ```
 
-[![asciicast](https://asciinema.org/a/676065.svg)](https://asciinema.org/a/676065)
+[![asciicast](https://asciinema.org/a/697682.svg)](https://asciinema.org/a/697682)
