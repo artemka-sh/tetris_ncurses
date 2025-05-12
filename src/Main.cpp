@@ -135,13 +135,7 @@ bool Main::gameTicks()
         breakguard.unlock();
     }
 
-    if(ground.checkGameOver())
-    {
-        return true;
-    }
-    {
-        return false;
-    }
+    return ground.checkGameOver();
 };
 
 void Main::gameOver()
