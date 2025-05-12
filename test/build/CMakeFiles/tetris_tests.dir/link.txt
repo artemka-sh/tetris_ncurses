@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/tetris_tests.dir/brick_test.cpp.o -o tetris_tests  -lgmock -lgtest -lpthread /usr/lib64/libgtest.so.0.0 -lgmock -lgtest -lpthread -lpthread -lpthread -lgmock -lgtest -lgmock -lgtest -lpthread 

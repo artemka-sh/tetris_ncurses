@@ -1,0 +1,4 @@
+/home/Artem/vscode/tetris_ncurses/test/build/CMakeFiles/rebuild_cache.dir
+/home/Artem/vscode/tetris_ncurses/test/build/CMakeFiles/edit_cache.dir
+/home/Artem/vscode/tetris_ncurses/test/build/CMakeFiles/test.dir
+/home/Artem/vscode/tetris_ncurses/test/build/CMakeFiles/tetris_tests.dir
