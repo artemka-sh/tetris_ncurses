@@ -14,27 +14,24 @@ int Ground::getLines()
 
 bool Ground::checkIntersection(const Brick* brick)
 {
-    (void)brick;
     for(int i = 0; i < brick->maskSide; i++)
         for(int j = 0; j < brick->maskSide; j++)
         {
-            const bool brickvalue = brick->mask[i * brick->maskSide + j];   
-            const bool groundvalue = ('.' != massive[(brick->position.y + i) * size.x 
-                                     + brick->position.x + j]);
-            
-            if(
-                (brickvalue == true and (brick->position.y + i) >= size.y)     // isOutOfBounds 
-                    or
-                ((brick->position.x + j) >= (size.x) and brickvalue)        // isBeyondRight 
-                    or
-                ((brick->position.x + j) < (0) and brickvalue)              // isBeyondLeft
-                    or
-                (brickvalue == true and groundvalue == true)                                // isIntersecting
-            )
+            const bool brickvalue = brick->mask[i * brick->maskSide + j];
+            if (brickvalue)
             {
-                return true; // пересечение засечено
+                if ((brick->position.y + i) >= size.y ||
+                    (brick->position.x + j) >= size.x ||
+                    (brick->position.x + j) < 0)
+                {
+                    return true;
+                }
+
+                if ('.' != massive[(brick->position.y + i) * size.x + brick->position.x + j])
+                {
+                    return true;
+                }
             }
-            
         }
     return false;
 }
