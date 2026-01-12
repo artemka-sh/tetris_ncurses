@@ -30,8 +30,8 @@ public:
     void setPositionCentered() {
         int maxY, maxX;
         getmaxyx(stdscr, maxY, maxX); 
-        int startY = (maxY - window->_maxy) / 2;
-        int startX = (maxX - window->_maxx) / 2;  
+        int startY = (maxY - getmaxy(window)) / 2;
+        int startX = (maxX - getmaxx(window)) / 2;
         setPosition(startY, startX); 
     }
 
